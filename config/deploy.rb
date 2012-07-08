@@ -29,6 +29,10 @@ task :production do
   find_and_execute_task("deploy:tags:schedule_creation")
 end
 
+if File.exists?("wompt.conf")
+   load 'wompt.conf'
+end
+
 load 'config/tasks'
 load 'config/config_files'
 load 'config/deploy_tags'

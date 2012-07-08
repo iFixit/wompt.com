@@ -5,3 +5,6 @@
 .*
 # All tilde ~ files (most vim temp files)
 *~
+
+# User-supplied config file
+wompt.conf
