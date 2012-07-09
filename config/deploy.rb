@@ -1,19 +1,13 @@
 load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
 set :application, "wompt"
-set :user, "ubuntu"
-set :host, "wompt.com"
 
 set :scm, :git
 set :repository, "git@github.com:wompt/wompt.com.git"
 set :git_enable_submodules, true
 set :deploy_via, :remote_cache
 
-
-role :app, host
-
 set :use_sudo, true
-set :admin_runner, 'ubuntu'
 set :normalize_asset_timestamps, false
 set :copy_exclude, [".git"]
 
@@ -31,6 +25,8 @@ end
 
 if File.exists?("wompt.conf")
    load 'wompt.conf'
+else
+   $stderr.puts "No deployment configuration file found. Copy wompt.conf.example to wompt.conf"
 end
 
 load 'config/tasks'

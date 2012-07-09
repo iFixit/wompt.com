@@ -1,0 +1,7 @@
+# Linux user
+set :user, "ubuntu"
+# The servers the application will run on
+role :app, "localhost"
+
+set :use_sudo, true
+
