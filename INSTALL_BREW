@@ -23,6 +23,7 @@ brew install mongodb
 git checkout master
 
 # cd path/to/wompt.com
+git submodule update --init
 cd authentication
 sudo gem install bundler
 bundle
