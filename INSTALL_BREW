@@ -1,0 +1,32 @@
+# vim: set syntax=sh:
+
+# If you have Homebrew, this will get the right versions of stuff installed
+# painlessly. If you need to update the version of node or mongodb, I found the
+# commit hashes via:
+# git log -S'0.6.5' -- Library/Formula/node.rb
+# Where `0.6.5` is the version you need and `node.rb` should be replaced with
+# the brew formula you want.
+#
+# NOTE: Don't run this file, it won't work. Just copy-paste commands that you
+# need. The comments should guide you
+
+cd `brew --prefix`
+
+# node v0.6.5
+git checkout 79fbb8609ceed3aa5d7debc941a056209f48a20b
+brew install node
+git checkout master
+
+# mongodb 2.0.4
+git checkout 41fed0cdca70d1262adfd48e378b171e630a04ea
+brew install mongodb
+git checkout master
+
+# cd path/to/wompt.com
+cd authentication
+sudo gem install bundler
+bundle
+
+cd ../nodejs
+curl http://npmjs.org/install.sh | sh
+npm install
