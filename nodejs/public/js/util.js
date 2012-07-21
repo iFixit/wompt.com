@@ -33,7 +33,7 @@ Text: (function Text(){
 			return matches && matches.some(function(match){
 				match = match.substr(1).toLowerCase();
             // does it match @<name> or @all or @everyone or @everybody?
-            matches_name_or_all = 
+            var matches_name_or_all = 
              my_name.indexOf(match) >= 0 ||
              match == "all" ||
              match == "everybody" ||
