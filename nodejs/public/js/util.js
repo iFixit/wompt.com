@@ -34,10 +34,10 @@ Text: (function Text(){
 				match = match.substr(1);
             // does it match @<name> or @all or @everyone or @everybody?
             matches_name_or_all = 
-             (my_name.indexOf(match.toLowerCase()) >= 0 ||
-             "all".indexOf(match.toLowerCase()) >= 0 ||
-             "everybody".indexOf(match.toLowerCase()) >= 0 ||
-             "everyone".indexOf(match.toLowerCase()) >= 0);
+             my_name.indexOf(match.toLowerCase()) >= 0 ||
+             "all" == match.toLowerCase() ||
+             "everybody" == match.toLowerCase() ||
+             "everyone" == match.toLowerCase();
 				return match.length >= 2 && matches_name_or_all;
 			});
 		},
