@@ -76,20 +76,22 @@ function UserListUI(ul, container, top){
 		
 		if(user_divs[user.id]) return;
 		
-		var name_div = user.el = $('<div>'),
-		link;
+		var name_div = user.el = $('<div>');
+		var link, tagLink;
+
 		if(UiOptions.hideProfileLinks){
 			link = $('<span>');
 		}else{
 			link = $('<a>');
 			link.attr('href', profileUrl(user));		
 		}
-		
+
+      tagLink = $('<span>');
+
 		name_div.attr({
 			id:'user_' + user.id,
 			'class': 'user'
 		});
-		name_div.append(link);
 		
 		link.attr({
 			title: user.name,
@@ -97,6 +99,31 @@ function UserListUI(ul, container, top){
 			style: 'color:' + UI.Colors.forUser(user.id) + ';'
 		});
 		link.text(user.name);
+
+      tagLink.attr({
+         style: 'color:' + UI.Colors.forUser(user.id) + '; cursor: pointer;',
+      });
+      tagLink.text("@");
+
+      name_div.append(tagLink);
+		name_div.append(link);
+
+      $(tagLink).click(function(e) {
+         var input = $('#message');
+         var tag = ' @' + $(e.target).next().html().split(' ')[0] + ' ';
+         input.val(input.val().trim() + tag).focus();
+         input.get(0).selectionStart =
+           input.get(0).selectionEnd = input.val().length;
+      });
+
+      $(tagLink).hover(
+         function(e) {
+            $(e.target).css('text-decoration', 'underline');
+         },
+         function(e) {
+            $(e.target).css('text-decoration', 'none');
+         }
+      );
 		
 		var insert_after = addToSortedList(user);
 		if(insert_after)
