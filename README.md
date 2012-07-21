@@ -29,6 +29,11 @@ Please read `INSTALL_BREW` for alternate installation instructions using Homebre
       gem install bundler
       bundle
 
+### npm ###
+    cd wompt.com/nodejs
+    curl http://npmjs.org/install.sh | sh
+    npm install
+
 ## Start in dev mode ##
 ### MongoDB ###
       mongod
