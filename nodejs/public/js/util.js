@@ -6,6 +6,7 @@ Text: (function Text(){
 	var http_matcher = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	var www_matcher = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
 	var mail_to_matcher = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
+   var image_suffix_matcher = /.(gif|jpg|jpeg|png|tiff|tif|svg)/gim;
 	var my_name = (window.Me && Me.name && Me.name.toLowerCase()) || '';
 	var filter = (function(){
 		var f = window.UiOptions && UiOptions.wordFilter;
@@ -16,6 +17,10 @@ Text: (function Text(){
 		newlineMatcher: /\n|\r\n/gim,
 		
 		linkify: function(text){
+         var tmp = this.imageDisplay(text);
+         if (text != tmp) {
+            return tmp;
+         }
 			text = text.replace(http_matcher, '<a href="$1" target="_blank">$1</a>');
 			text = text.replace(www_matcher, '$1<a href="http://$2" target="_blank">$2</a>');
 			text = text.replace(mail_to_matcher, '<a href="mailto:$1">$1</a>');
@@ -23,10 +28,28 @@ Text: (function Text(){
 		},
 		
 		linkifyTest: function(text){
-			return http_matcher.test(text) ||
-			       www_matcher.test(text) ||
-			       mail_to_matcher.test(text);
+			return this.httpMatch(text) ||
+			       this.wwwMatch(text) ||
+			       this.mailtoMatch(text);
 		},
+
+      // we need these four match methods because regex.test() is buggy when
+      // you reuse a regex object. other regex functions are fine though...
+      httpMatch: function(text) {
+         return (/(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
+      },
+
+      wwwMatch: function(text) {
+         return (/(^|[^\/])(www\.[\S]+(\b|$))/gim).test(text);
+      },
+
+      mailtoMatch: function(text) {
+         return (/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim).test(text);
+      },
+
+      imageSuffixMatch: function(text) {
+         return (/.(gif|jpg|jpeg|png|tiff|tif|svg)/gim).test(text);
+      },
 		
 		mentionMatcher: function(text){
 			var matches = text.match(/@([^\s]+)/g);
@@ -35,6 +58,18 @@ Text: (function Text(){
 				return match.length >= 2 && my_name.indexOf(match.toLowerCase()) >= 0;
 			});
 		},
+      
+      imageDisplay: function(text){
+         if (this.httpMatch(text) || this.wwwMatch(text)) {
+            if (this.wwwMatch(text))
+               text = 'http://' + text;
+
+            if (this.imageSuffixMatch(text)) {
+               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 100%; max-height: 800px;" /></a> ');
+            }
+         }
+         return text;
+      },
 		
 		wordFilter: function(text){
 			if(!filter) return text;
