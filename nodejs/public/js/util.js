@@ -6,7 +6,7 @@ Text: (function Text(){
 	var http_matcher = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	var www_matcher = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
 	var mail_to_matcher = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
-   var image_suffix_matcher = /.(gif|jpg|jpeg|png|tiff|tif|svg|mini|thumbnail|standard|medium|large|huge)/gim;
+   var image_suffix_matcher = /\.(gif|jpg|jpeg|png|tiff|tif|svg|mini|thumbnail|standard|medium|large|huge)/gim;
 	var my_name = (window.Me && Me.name && Me.name.toLowerCase()) || '';
 	var filter = (function(){
 		var f = window.UiOptions && UiOptions.wordFilter;
@@ -48,7 +48,7 @@ Text: (function Text(){
       },
 
       imageSuffixMatch: function(text) {
-         return (/.(gif|jpg|jpeg|png|tiff|tif|svg)/gim).test(text);
+         return (/(\.(gif|jpg|jpeg|png|tiff|tif|svg|mini|thumbnail|standard|medium|large|huge)/gim).test(text);
       },
 		
 		mentionMatcher: function(text){
