@@ -48,7 +48,7 @@ Text: (function Text(){
       },
 
       imageSuffixMatch: function(text) {
-         return (/(\.(gif|jpg|jpeg|png|tiff|tif|svg|mini|thumbnail|standard|medium|large|huge)/gim).test(text);
+         return (/\.(gif|jpg|jpeg|png|tiff|tif|svg|mini|thumbnail|standard|medium|large|huge)/gim).test(text);
       },
 		
 		mentionMatcher: function(text){
