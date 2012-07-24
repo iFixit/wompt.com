@@ -33,8 +33,8 @@ Text: (function Text(){
 			       this.mailtoMatch(text);
 		},
 
-      // we need these four match methods because regex.test() is buggy when
-      // you reuse a regex object. other regex functions are fine though...
+      // We need these four match methods because regex.test() is buggy when
+      // you reuse a regex object. Other regex functions are fine though...
       httpMatch: function(text) {
          return (/(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
       },
