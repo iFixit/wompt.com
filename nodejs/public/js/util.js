@@ -47,7 +47,7 @@ Text: (function Text(){
          }
 
          if (url != "" && this.matchImgSuffix(url)) {
-            return '<a href="' + url + '" target="_blank"><img src="' + url + '" style="max-width: 100%; max-height: 800px;" /></a>';
+            return '<a href="' + url + '" target="_blank"><img src="' + url + '" style="max-width: 300px; max-height: 300px;" /></a>';
          }
 
          return text;
