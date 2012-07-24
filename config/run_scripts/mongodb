@@ -8,5 +8,5 @@ case $1 in
 	 stop)  
 		 kill `cat /var/lib/mongodb/mongod.lock` ;;
 	 *)  
-		 echo "usage: wompt {start|stop}" ;;
+		 echo "usage: mongodb {start|stop}" ;;
 esac
