@@ -31,8 +31,14 @@ Text: (function Text(){
 		mentionMatcher: function(text){
 			var matches = text.match(/@([^\s]+)/g);
 			return matches && matches.some(function(match){
-				match = match.substr(1);
-				return match.length >= 2 && my_name.indexOf(match.toLowerCase()) >= 0;
+				match = match.substr(1).toLowerCase();
+            // does it match @<name> or @all or @everyone or @everybody?
+            var matches_name_or_all = 
+             my_name.indexOf(match) >= 0 ||
+             match == "all" ||
+             match == "everybody" ||
+             match == "everyone";
+				return match.length >= 2 && matches_name_or_all;
 			});
 		},
 		
