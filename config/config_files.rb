@@ -11,7 +11,7 @@ namespace :deploy do
   desc "Create symlinks in /etc/monit to the monit files in the deployed app"
   task "symlink_monit_config" do
     if deployment == 'production'
-      run "#{try_sudo :as => 'root'} ln -f -s #{current_path}/config/monit/* /etc/monit/"
+      run "#{try_sudo} ln -f -s #{current_path}/config/monit/* #{monit_config_location}"
     else
       logger.info "Skipping monit config because this is not the live production app"
     end

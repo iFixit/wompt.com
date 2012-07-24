@@ -10,6 +10,7 @@ set :deploy_via, :remote_cache
 set :use_sudo, true
 set :normalize_asset_timestamps, false
 set :copy_exclude, [".git"]
+set :monit_config_location, "/etc/monit/"
 
 default_run_options[:pty] = true
 
