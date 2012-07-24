@@ -29,12 +29,12 @@ namespace :deploy do
   end
   
   def process_erb_file_and_upload filepath, opt={}
-    remote_tempfile = "/tmp/#{File.basename(filepath)}"
+    remote_tempfile = "/tmp/#{File.basename(filepath)}." + rand(100000).to_s;
     file = File.read(filepath)
     processed = ERB.new(file).result(binding)
     put processed, remote_tempfile
     dest = opt[:destination] || (current_path + "/" + filepath)
-    run "#{try_sudo :as => 'root'} mv #{remote_tempfile} #{dest}" 
+    run "mv #{remote_tempfile} #{dest}" 
   end
 end
 
