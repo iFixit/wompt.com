@@ -88,7 +88,7 @@ Text: (function Text(){
       },
 
       matchWWW: function(text) {
-         return (/^(www\.[\S]+))/gim).test(text);
+         return (/^(www\.[\S]+)/gim).test(text);
       },
 
       matchMailto: function(text) {
