@@ -32,6 +32,10 @@ Text: (function Text(){
 
                lines[i] += words[j] + (j != words.length - 1 ? " " : "");
             }
+            // add 4chan-style greentext filter
+            if (words[0].indexOf("&gt;") == 0) {
+               lines[i] = '<span style="color:green">' + lines[i] + '</span>';
+            }
             text += lines[i] + (i != lines.length - 1 ? "\n" : "");
          }
 
@@ -78,7 +82,8 @@ Text: (function Text(){
 		linkifyTest: function(text){
 			return this.matchHttp(text) ||
 			       this.matchWWW(text) ||
-			       this.matchMailto(text);
+			       this.matchMailto(text) ||
+                text.indexOf(">") > -1;
 		},
 
       // We need these four match methods because regex.test() is buggy when
