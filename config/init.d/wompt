@@ -8,6 +8,7 @@
 
 USER="<%= user %>"
 
+APP="wompt"
 NODE="<%= node_path %>"
 SERVER="<%= current_path %>/nodejs/server.js"
 ERR_LOG="<%= shared_path %>/log/wompt.error.log"
@@ -17,14 +18,17 @@ PID_FILE="<%= shared_path %>/pids/wompt.pid"
 
 do_start()
 {
-        [ -f "$PID_FILE" ] && PID=`cat $PID_FILE` 
+        PID=`cat $PID_FILE 2>/dev/null`
 
-        if [ "$PID" -ne 0 ] && [ "$PID" -ne 0 ] $$ checkpid $PID; then
-                echo -n "$SERVER is still running with PID: $PID"
+        if [ "$PID" != "0" ] &&
+           [ "$PID" != "" ] &&
+           checkpid "$PID"; then
+                do_status
                 echo_failure
+                echo
                 RETVAL=1
         else
-                echo -n $"Starting $SERVER: "
+                echo -n $"Starting $APP: "
                 runuser -l "$USER" -c "NODE_ENV=$NODE_ENV $NODE $SERVER 2>>$ERR_LOG >>$LOG &" && echo_success || echo_failure
                 RETVAL=$?
                 echo
@@ -32,14 +36,13 @@ do_start()
 }
 do_stop()
 {
-        echo -n $"Stopping $SERVER: "
-        pid=`cat $PID_FILE`
-        [ "$pid" -ne 0 ] && [ "$pid" -ne 0 ] &&
-           kill $pid > /dev/null 2>&1 &&
-           echo_success || echo_failure
-        RETVAL=$?
-        echo
-        [ $RETVAL -eq 0 ] && rm -f $PID_FILE
+       echo -n $"Stopping $APP: "
+       killproc -p $PID_FILE $APP
+       echo
+}
+do_status()
+{
+       status -p $PID_FILE $APP
 }
 
 case "$1" in
@@ -52,6 +55,9 @@ case "$1" in
         restart)
                 do_stop
                 do_start
+                ;;
+        status)
+                do_status
                 ;;
         *)
                 echo "Usage: $0 {start|stop|restart}"
