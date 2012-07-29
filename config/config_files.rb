@@ -1,7 +1,7 @@
 namespace :deploy do
-  desc "save the local version of the run scripts to the server"
-  task :send_run_scripts, :roles => :app do
-    Dir.glob('config/run_scripts/*').each do |file|
+  desc "save the local version of the init.d scripts to the server"
+  task :send_initd_scripts, :roles => :app do
+    Dir.glob('config/init.d/*').each do |file|
       dest = "#{shared_path}/#{File.basename(file)}"
       process_erb_file_and_upload file, :destination => dest
       run "chmod a+x #{dest}"
@@ -39,5 +39,5 @@ namespace :deploy do
 end
 
 after 'deploy:update', 'deploy:update_monit_config'
-after 'deploy:update', 'deploy:send_run_scripts'
+after 'deploy:update', 'deploy:send_initd_scripts'
 after 'deploy:cold', 'deploy:symlink_monit_config'

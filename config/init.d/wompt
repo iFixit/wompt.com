@@ -1,0 +1,61 @@
+#!/bin/sh
+
+#
+# chkconfig: 35 99 99
+#
+
+. /etc/rc.d/init.d/functions
+
+USER="<%= user %>"
+
+NODE="<%= node_path %>"
+SERVER="<%= current_path %>/nodejs/server.js"
+ERR_LOG="<%= shared_path %>/log/wompt.error.log"
+LOG="<%= shared_path %>/log/wompt.log"
+NODE_ENV="<%= application_environment %>"
+PID_FILE="<%= shared_path %>/pids/wompt.pid"
+
+do_start()
+{
+        [ -f "$PID_FILE" ] && PID=`cat $PID_FILE` 
+
+        if [ "$PID" -ne 0 ] && [ "$PID" -ne 0 ] $$ checkpid $PID; then
+                echo -n "$SERVER is still running with PID: $PID"
+                echo_failure
+                RETVAL=1
+        else
+                echo -n $"Starting $SERVER: "
+                runuser -l "$USER" -c "NODE_ENV=$NODE_ENV $NODE $SERVER 2>>$ERR_LOG >>$LOG &" && echo_success || echo_failure
+                RETVAL=$?
+                echo
+        fi
+}
+do_stop()
+{
+        echo -n $"Stopping $SERVER: "
+        pid=`cat $PID_FILE`
+        [ "$pid" -ne 0 ] && [ "$pid" -ne 0 ] &&
+           kill $pid > /dev/null 2>&1 &&
+           echo_success || echo_failure
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f $PID_FILE
+}
+
+case "$1" in
+        start)
+                do_start
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                RETVAL=1
+esac
+
+exit $RETVAL
