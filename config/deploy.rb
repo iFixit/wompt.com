@@ -12,6 +12,9 @@ set :normalize_asset_timestamps, false
 set :copy_exclude, [".git"]
 set :monit_config_location, "/etc/monit/"
 
+# Node settings
+set :node_path, "/mnt/ebs/bin/node"
+
 default_run_options[:pty] = true
 
 task :production do
