@@ -32,6 +32,10 @@ Text: (function Text(){
 
                lines[i] += words[j] + (j != words.length - 1 ? " " : "");
             }
+            // add 4chan-style greentext filter
+            if (words[0].indexOf("&gt;") == 0) {
+               lines[i] = '<span style="color:green">' + lines[i] + '</span>';
+            }
             text += lines[i] + (i != lines.length - 1 ? "\n" : "");
          }
 
@@ -47,7 +51,7 @@ Text: (function Text(){
          }
 
          if (url != "" && this.matchImgSuffix(url)) {
-            return '<a href="' + url + '" target="_blank"><img src="' + url + '" style="max-width: 100%; max-height: 800px;" /></a>';
+            return '<a href="' + url + '" target="_blank"><img src="' + url + '" style="max-width: 300px; max-height: 300px;" /></a>';
          }
 
          return text;
@@ -58,7 +62,7 @@ Text: (function Text(){
          var rr = id == "oHg5SJYRHA0" ? 1 : 0;
          var url = 'https://www.youtube.com/v/' + id + '?version=3&autoplay=' + rr;
          if ((this.matchHttp(text) || this.matchWWW(text)) && this.matchYoutube(text)) {
-               return '<object width="640" height="390"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="640" height="390"></embed></object>'
+               return '<object width="384" height="234"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="384" height="234"></embed></object>'
          }
 
          return text;
@@ -78,17 +82,18 @@ Text: (function Text(){
 		linkifyTest: function(text){
 			return this.matchHttp(text) ||
 			       this.matchWWW(text) ||
-			       this.matchMailto(text);
+			       this.matchMailto(text) ||
+                text.indexOf(">") > -1;
 		},
 
       // We need these four match methods because regex.test() is buggy when
       // you reuse a regex object. Other regex functions are fine though...
       matchHttp: function(text) {
-         return (/(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
+         return (/^((https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
       },
 
       matchWWW: function(text) {
-         return (/(^|[^\/])(www\.[\S]+(\b|$))/gim).test(text);
+         return (/^(www\.[\S]+)/gim).test(text);
       },
 
       matchMailto: function(text) {
@@ -128,7 +133,7 @@ Text: (function Text(){
                text = 'http://' + text;
 
             if (this.imageSuffixMatch(text)) {
-               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 100%; max-height: 800px;" /></a> ');
+               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 200px; max-height: 200px;" /></a> ');
             }
          }
          return text;
