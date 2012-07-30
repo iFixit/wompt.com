@@ -133,7 +133,7 @@ Text: (function Text(){
                text = 'http://' + text;
 
             if (this.imageSuffixMatch(text)) {
-               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 100%; max-height: 800px;" /></a> ');
+               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 200px; max-height: 200px;" /></a> ');
             }
          }
          return text;
