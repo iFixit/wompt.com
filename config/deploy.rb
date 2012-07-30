@@ -13,9 +13,10 @@ set :copy_exclude, [".git"]
 set :monit_config_location, "/etc/monit/"
 
 # Node settings
-set :node_path, "/mnt/ebs/bin/node"
+set :node_path, "/usr/bin/node"
 
 default_run_options[:pty] = true
+
 # Use a login shell when executing commands so that
 # .bashrc and .bash_profile are loaded.
 set :default_shell, "sh -l"
