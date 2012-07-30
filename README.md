@@ -1,37 +1,34 @@
 # Wompt.com Readme #
 
 ## Installation ##
-### Node 0.6 ###
-      git clone https://github.com/ry/node.git
-      cd node
-      git checkout v0.6.5
-      ./configure
-      make
-      make install
-
-### MongoDB ###
-      wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.4.tgz
-      tar -xzf mongodb-linux-i686-2.0.4.tgz
-      mv mongodb-linux-i686-2.0.4.tgz /someplace/in/your/path
+### Requirements ###
+   * node.js - v0.6.x
+   * ruby - v1.9
+      * rubygems
+      * bundler (gem)
+   * mongodb
 
 ### Wompt ###
       git clone git@github.com:Wompt/wompt.com.git
       cd wompt.com
-      git submodule update --init
+      git submodule update --init --recursive
 
 ### Wompt authentication server ###
       cd wompt.com/authentication
-      gem install bundler
-      bundle
+      bundle install
 
-### Start in dev mode ###
-#### MongoDB ####
-      mongod
+### Start in development Mode ###
 #### Wompt authentication server ####
       cd authentication
       bundle exec rackup
 #### Wompt ####
       node nodejs/server.js
+
+### Deployment ###
+### Install Capistrano (dev machine) ###
+      gem install capistrano
+
+### Setup for deployment ###
 
 ### Local Development ###
 #### Offline mode ####
