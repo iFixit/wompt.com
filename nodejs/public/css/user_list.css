@@ -41,6 +41,14 @@
 	position:relative;
 }
 
+#user_list .tagLink {
+   cursor: pointer;
+}
+
+#user_list .tagLink:hover {
+   text-decoration: underline;
+}
+
 #user_list .user.anon{
 	color:#aaa;
 }

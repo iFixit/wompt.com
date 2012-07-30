@@ -77,7 +77,7 @@ function UserListUI(ul, container, top){
 		if(user_divs[user.id]) return;
 		
 		var name_div = user.el = $('<div>');
-		var link, tagLink;
+		var link;
 
 		if(UiOptions.hideProfileLinks){
 			link = $('<span>');
@@ -85,8 +85,6 @@ function UserListUI(ul, container, top){
 			link = $('<a>');
 			link.attr('href', profileUrl(user));		
 		}
-
-      tagLink = $('<span>');
 
 		name_div.attr({
 			id:'user_' + user.id,
@@ -100,31 +98,9 @@ function UserListUI(ul, container, top){
 		});
 		link.text(user.name);
 
-      tagLink.attr({
-         style: 'color:' + UI.Colors.forUser(user.id) + '; cursor: pointer;',
-      });
-      tagLink.text("@");
-
-      name_div.append(tagLink);
+		name_div.append(createTagLink(user));
 		name_div.append(link);
 
-      $(tagLink).click(function(e) {
-         var input = $('#message');
-         var tag = ' @' + $(e.target).next().html().split(' ')[0] + ' ';
-         input.val(input.val().trim() + tag).focus();
-         input.get(0).selectionStart =
-           input.get(0).selectionEnd = input.val().length;
-      });
-
-      $(tagLink).hover(
-         function(e) {
-            $(e.target).css('text-decoration', 'underline');
-         },
-         function(e) {
-            $(e.target).css('text-decoration', 'none');
-         }
-      );
-		
 		var insert_after = addToSortedList(user);
 		if(insert_after)
 			insert_after.el.after(name_div);
@@ -133,6 +109,24 @@ function UserListUI(ul, container, top){
 		user_divs[user.id] = name_div;
 		
 		self.emit('new_user', user, name_div);
+	}
+
+	function createTagLink(user) {
+		var tagLink = $('<span class="tagLink">');
+		tagLink.attr({
+			style: 'color:' + UI.Colors.forUser(user.id) + '; cursor: pointer;',
+		});
+		tagLink.text("@");
+
+		$(tagLink).click(function(e) {
+			var input = $('#message');
+			var tag = ' @' + user.name + ' ';
+			input.val(input.val().trim() + tag).focus();
+			input.get(0).selectionStart =
+			  input.get(0).selectionEnd = input.val().length;
+		});
+
+		return tagLink;
 	}
 	
 	function profileUrl(user){
