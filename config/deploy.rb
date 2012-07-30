@@ -16,6 +16,10 @@ set :monit_config_location, "/etc/monit/"
 set :node_path, "/mnt/ebs/bin/node"
 
 default_run_options[:pty] = true
+# Use a login shell when executing commands so that
+# .bashrc and .bash_profile are loaded.
+set :default_shell, "sh -l"
+
 
 task :production do
   # :deployment variable should match task name
