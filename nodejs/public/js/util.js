@@ -126,18 +126,6 @@ Text: (function Text(){
 			});
 		},
 
-      imageDisplay: function(text){
-         if (this.matchHttp(text) || this.matchWWW(text)) {
-            if (this.matchWWW(text))
-               text = 'http://' + text;
-
-            if (this.imageSuffixMatch(text)) {
-               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 200px; max-height: 200px;" /></a> ');
-            }
-         }
-         return text;
-      },
-
 		wordFilter: function(text){
 			if(!filter) return text;
 			return text.replace(filter, function(m) {
