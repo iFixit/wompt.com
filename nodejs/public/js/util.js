@@ -59,8 +59,7 @@ Text: (function Text(){
 
       parseYoutube: function(text) {
          var id = this.getYoutubeId(text);
-         var rr = id == "oHg5SJYRHA0" ? 1 : 0;
-         var url = 'https://www.youtube.com/v/' + id + '?version=3&autoplay=' + rr;
+         var url = 'https://www.youtube.com/v/' + id + '?version=3';
          if ((this.matchHttp(text) || this.matchWWW(text)) && this.matchYoutube(text)) {
                return '<object width="384" height="234"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="384" height="234"></embed></object>'
          }
