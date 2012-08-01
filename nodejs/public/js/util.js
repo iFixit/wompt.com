@@ -88,7 +88,7 @@ Text: (function Text(){
       // We need these four match methods because regex.test() is buggy when
       // you reuse a regex object. Other regex functions are fine though...
       matchHttp: function(text) {
-         return (/^((https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
+         return (/((https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
       },
 
       matchWWW: function(text) {
