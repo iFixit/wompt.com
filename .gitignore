@@ -10,3 +10,6 @@
 
 # npm-installed files
 nodejs/node_modules/*
+
+# Config file
+wompt.conf
