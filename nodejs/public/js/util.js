@@ -51,7 +51,7 @@ Text: (function Text(){
          }
 
          if (url != "" && this.matchImgSuffix(url)) {
-            return '<a href="' + url + '" target="_blank"><img src="' + url + '" style="max-width: 300px; max-height: 300px;" /></a>';
+            return '<span style="color:blue;" class="img_compact_new" url="' + url + '">[&#x25A0;]</span>';
          }
 
          return text;
@@ -61,7 +61,7 @@ Text: (function Text(){
          var id = this.getYoutubeId(text);
          var url = 'https://www.youtube.com/v/' + id + '?version=3';
          if ((this.matchHttp(text) || this.matchWWW(text)) && this.matchYoutube(text)) {
-               return '<object width="384" height="234"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="384" height="234"></embed></object>'
+            return '<span style="color:red;" class="yt_compact" url="' + url + '">[&#9654;]<object style="display: none;" width="384" height="234"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="384" height="234"></embed></object></span>';
          }
 
          return text;
@@ -174,3 +174,65 @@ if(window.EventEmitter){
 		delete this.emit;
 	}
 }
+
+/**
+ * This section allows you to hide and show images and YouTube videos.
+ */
+
+var IMG_MAX_DIM = "300px";
+
+$('span.img_compact_new').live('click', function() {
+   var span = $(this);
+   // load the image
+   var img_link = $('<a>');
+   img_link.attr('href', span.attr('url'));
+   img_link.attr('target', '_blank');
+   
+   var img = $('<img>');
+   img.attr('src', span.attr('url'));
+   img.attr('style', "max-width: " + IMG_MAX_DIM + "; max-height: " +
+    IMG_MAX_DIM + ";");
+   
+   // add these to the span
+   img_link.append(img);
+   span.append(img_link);
+   
+   // Set the class to 'expanded'
+   this.className = "img_expanded";
+});
+
+$('span.img_expanded').live('click', function() {
+   var span = $(this);
+   var img = span.children('a');
+
+   img.hide();
+
+   this.className = "img_compact";
+});
+
+$('span.img_compact').live('click', function() {
+   var span = $(this);
+   var img = span.children('a');
+
+   img.show();
+
+   this.className = "img_expanded";
+});
+
+$('span.yt_expanded').live('click', function() {
+   var span = $(this);
+   var yt = span.children('object');
+
+   yt.hide();
+
+   this.className = "yt_compact";
+});
+
+$('span.yt_compact').live('click', function() {
+   var span = $(this);
+   var yt = span.children('object');
+
+   yt.show();
+
+   this.className = "yt_expanded";
+});
