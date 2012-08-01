@@ -11,5 +11,5 @@
 # npm-installed files
 nodejs/node_modules/*
 
-# Config file
+# User-supplied config file
 wompt.conf

@@ -2,49 +2,46 @@
 
 ## Installation ##
 
-### Alternate Homebrew instructions ###
+### Alternate instructions for Homebrew ###
 
 Please read `INSTALL_BREW` for alternate installation instructions using Homebrew.
 
-### Node 0.6 ###
-      git clone https://github.com/joyent/node.git
-      cd node
-      git checkout v0.6.5
-      ./configure
-      make
-      make install
-
-### MongoDB ###
-      wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.4.tgz
-      tar -xzf mongodb-linux-i686-2.0.4.tgz
-      mv mongodb-linux-i686-2.0.4.tgz /someplace/in/your/path
+### Requirements ###
+   * node.js - v0.6.x
+      * npm
+   * ruby - v1.9
+      * rubygems
+      * bundler (gem)
+   * mongodb
 
 ### Wompt ###
       git clone git@github.com:Wompt/wompt.com.git
       cd wompt.com
-      git submodule update --init
+      git submodule update --init --recursive
 
 ### Wompt authentication server ###
       cd wompt.com/authentication
-      gem install bundler
-      bundle
+      bundle install
 
-### npm ###
-    cd wompt.com/nodejs
-    curl http://npmjs.org/install.sh | sh
-    npm install
+### Start in development Mode ###
 
-## Start in dev mode ##
-### MongoDB ###
+#### MongoDB ####
       mongod
-### Wompt authentication server ###
+
+#### Wompt authentication server ####
       cd authentication
       bundle exec rackup
 ### Wompt ###
       node nodejs/server.js
 
-## Local Development ###
-### Offline mode ###
+### Deployment ###
+### Install Capistrano (dev machine) ###
+      gem install capistrano
+
+### Setup for deployment ###
+
+### Local Development ###
+#### Offline mode ####
     node nodejs/server.js -offline
         
 Running Wompt with the `-offline` flag tells wompt to rely on no external

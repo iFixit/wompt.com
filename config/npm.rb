@@ -1,6 +1,7 @@
 namespace :deploy do
 	namespace :npm do
 		after "deploy:update_code", "deploy:npm:create_symlinks"
+		after 'deploy:cold', 'deploy:npm:install'
 
 		desc "Deploy and install missing npm dependencies on the server"
 		task :default, :roles => :app do

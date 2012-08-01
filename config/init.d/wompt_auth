@@ -1,0 +1,68 @@
+#!/bin/sh
+
+#
+# chkconfig: 35 99 99
+#
+
+. /etc/rc.d/init.d/functions
+
+USER="<%= user %>"
+
+APP="wompt_auth"
+NODE="<%= node_path %>"
+SERVER_DIR="<%= current_path %>/authentication"
+SERVER="config.ru"
+ERR_LOG="<%= shared_path %>/log/wompt_auth.error.log"
+LOG="<%= shared_path %>/log/wompt_auth.log"
+APP_ENV="<%= application_environment %>"
+PID_FILE="<%= shared_path %>/pids/wompt_auth.pid"
+
+do_start()
+{
+        PID=`cat $PID_FILE 2>/dev/null`
+
+        if [ "$PID" != "0" ] &&
+           [ "$PID" != "" ] &&
+           checkpid "$PID"; then
+                do_status
+                echo_failure
+                echo
+                RETVAL=1
+        else
+                echo -n $"Starting $APP: "
+                runuser -l "$USER" -c "cd $SERVER_DIR && bundle exec rackup --env $APP_ENV --pid $PID_FILE $SERVER 2>>$ERR_LOG >>$LOG &" && echo_success || echo_failure
+                RETVAL=$?
+                echo
+        fi
+}
+do_stop()
+{
+       echo -n $"Stopping $APP: "
+       killproc -p $PID_FILE $APP
+       echo
+}
+do_status()
+{
+       status -p $PID_FILE $APP
+}
+
+case "$1" in
+        start)
+                do_start
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        status)
+                do_status
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                RETVAL=1
+esac
+
+exit $RETVAL
