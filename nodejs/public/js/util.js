@@ -51,7 +51,7 @@ Text: (function Text(){
          }
 
          if (url != "" && this.matchImgSuffix(url)) {
-            return '<a href="' + url + '" target="_blank"><img src="' + url + '" style="max-width: 300px; max-height: 300px;" /></a>';
+            return '<span style="color:blue;" class="img_compact_new" url="' + url + '">[&#x25A0;]</span>';
          }
 
          return text;
@@ -59,10 +59,9 @@ Text: (function Text(){
 
       parseYoutube: function(text) {
          var id = this.getYoutubeId(text);
-         var rr = id == "oHg5SJYRHA0" ? 1 : 0;
-         var url = 'https://www.youtube.com/v/' + id + '?version=3&autoplay=' + rr;
+         var url = 'https://www.youtube.com/v/' + id + '?version=3';
          if ((this.matchHttp(text) || this.matchWWW(text)) && this.matchYoutube(text)) {
-               return '<object width="384" height="234"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="384" height="234"></embed></object>'
+            return '<span style="color:red;" class="yt_compact" url="' + url + '">[&#9654;]<object style="display: none;" width="384" height="234"><param name="movie" value="' + url + '"></param><param name="allowScriptAccess" value="always"></param><embed src="' + url + '" type="application/x-shockwave-flash" allowscriptaccess="always" width="384" height="234"></embed></object></span>';
          }
 
          return text;
@@ -89,7 +88,7 @@ Text: (function Text(){
       // We need these four match methods because regex.test() is buggy when
       // you reuse a regex object. Other regex functions are fine though...
       matchHttp: function(text) {
-         return (/^((https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
+         return (/((https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim).test(text);
       },
 
       matchWWW: function(text) {
@@ -126,18 +125,6 @@ Text: (function Text(){
 				return match.length >= 2 && matches_name_or_all;
 			});
 		},
-
-      imageDisplay: function(text){
-         if (this.matchHttp(text) || this.matchWWW(text)) {
-            if (this.matchWWW(text))
-               text = 'http://' + text;
-
-            if (this.imageSuffixMatch(text)) {
-               text = text.replace(http_matcher, '<a href="$1" target="_blank"><img src="$1" style="max-width: 200px; max-height: 200px;" /></a> ');
-            }
-         }
-         return text;
-      },
 
 		wordFilter: function(text){
 			if(!filter) return text;
@@ -187,3 +174,65 @@ if(window.EventEmitter){
 		delete this.emit;
 	}
 }
+
+/**
+ * This section allows you to hide and show images and YouTube videos.
+ */
+
+var IMG_MAX_DIM = "300px";
+
+$('span.img_compact_new').live('click', function() {
+   var span = $(this);
+   // load the image
+   var img_link = $('<a>');
+   img_link.attr('href', span.attr('url'));
+   img_link.attr('target', '_blank');
+   
+   var img = $('<img>');
+   img.attr('src', span.attr('url'));
+   img.attr('style', "max-width: " + IMG_MAX_DIM + "; max-height: " +
+    IMG_MAX_DIM + ";");
+   
+   // add these to the span
+   img_link.append(img);
+   span.append(img_link);
+   
+   // Set the class to 'expanded'
+   this.className = "img_expanded";
+});
+
+$('span.img_expanded').live('click', function() {
+   var span = $(this);
+   var img = span.children('a');
+
+   img.hide();
+
+   this.className = "img_compact";
+});
+
+$('span.img_compact').live('click', function() {
+   var span = $(this);
+   var img = span.children('a');
+
+   img.show();
+
+   this.className = "img_expanded";
+});
+
+$('span.yt_expanded').live('click', function() {
+   var span = $(this);
+   var yt = span.children('object');
+
+   yt.hide();
+
+   this.className = "yt_compact";
+});
+
+$('span.yt_compact').live('click', function() {
+   var span = $(this);
+   var yt = span.children('object');
+
+   yt.show();
+
+   this.className = "yt_expanded";
+});
