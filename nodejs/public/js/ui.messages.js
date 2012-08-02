@@ -39,8 +39,13 @@ UI.once('init', function(){
 	
 	function linkifyAndInsert(el, text){
 		if(Util.Text.linkifyTest(text)){
-			//escape <,> so we don't include any nasty html tags
-			text = text.replace(/</g, '&lt;').replace(/>/g,'&gt;');
+			//escape [<, >, ', ", &] so we don't include any nasty html tags
+			text = text
+          .replace(/'/g, '&#39;')
+          .replace(/"/g, '&quot;')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g,'&gt;');
 			el.html(Util.Text.linkify(text));
 		}
 		else
