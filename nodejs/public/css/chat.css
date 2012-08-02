@@ -88,6 +88,12 @@ body#chat .main{
 	color:#444;
 }
 
+span.img_expanded {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+
 #chat #footer_container{
 	font-size:12px;
 	height:auto;
