@@ -179,7 +179,6 @@ if(window.EventEmitter){
  * This section allows you to hide and show images and YouTube videos.
  */
 
-var IMG_MAX_DIM = "300px";
 
 $('span.img_compact_new').live('click', function() {
    var span = $(this);
@@ -190,15 +189,15 @@ $('span.img_compact_new').live('click', function() {
    
    var img = $('<img>');
    img.attr('src', span.attr('url'));
-   img.attr('style', "max-width: " + IMG_MAX_DIM + "; max-height: " +
-    IMG_MAX_DIM + ";");
+   //img.attr('style', "max-width: " + IMG_MAX_DIM + "; max-height: " +
+   // IMG_MAX_DIM + ";");
    
    // add these to the span
    img_link.append(img);
    span.append(img_link);
    
    // Set the class to 'expanded'
-   this.className = "img_expanded";
+   span.attr('class', 'img_expanded');
 });
 
 $('span.img_expanded').live('click', function() {
@@ -207,7 +206,7 @@ $('span.img_expanded').live('click', function() {
 
    img.hide();
 
-   this.className = "img_compact";
+   span.attr('class', 'img_compact');
 });
 
 $('span.img_compact').live('click', function() {
@@ -216,7 +215,7 @@ $('span.img_compact').live('click', function() {
 
    img.show();
 
-   this.className = "img_expanded";
+   span.attr('class', 'img_expanded');
 });
 
 $('span.yt_expanded').live('click', function() {
@@ -225,7 +224,7 @@ $('span.yt_expanded').live('click', function() {
 
    yt.hide();
 
-   this.className = "yt_compact";
+   span.attr('class', 'yt_compact');
 });
 
 $('span.yt_compact').live('click', function() {
@@ -234,5 +233,5 @@ $('span.yt_compact').live('click', function() {
 
    yt.show();
 
-   this.className = "yt_expanded";
+   span.attr('class', 'yt_expanded');
 });
