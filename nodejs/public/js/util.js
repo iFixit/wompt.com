@@ -12,36 +12,6 @@ Text: (function Text(){
 	return {
 		newlineMatcher: /\n|\r\n/gim,
 
-      linkify: function(text) {
-         var lines = text.split("\n");
-         text = "";
-         for (i = 0; i < lines.length; ++i) {
-            var words = lines[i].split(" ");
-            lines[i] = "";
-            for (j = 0; j < words.length; ++j) {
-               var tmp = words[j];
-               words[j] = this.parseYoutube(words[j]);
-
-               if (words[j] == tmp) {
-                  words[j] = this.parseImg(words[j]);
-
-                  if (words[j] == tmp) {
-                     words[j] = this.parseLink(words[j]);
-                  }
-               }
-
-               lines[i] += words[j] + (j != words.length - 1 ? " " : "");
-            }
-            // add 4chan-style greentext filter
-            if (words[0].indexOf("&gt;") == 0) {
-               lines[i] = '<span style="color:green">' + lines[i] + '</span>';
-            }
-            text += lines[i] + (i != lines.length - 1 ? "\n" : "");
-         }
-
-         return text;
-      },
-
       parseImg: function(text) {
          var url = "";
          if (this.matchHttp(text)) {
@@ -77,13 +47,6 @@ Text: (function Text(){
             return text;
          }
       },
-
-		linkifyTest: function(text){
-			return this.matchHttp(text) ||
-			       this.matchWWW(text) ||
-			       this.matchMailto(text) ||
-                text.indexOf(">") > -1;
-		},
 
       // We need these four match methods because regex.test() is buggy when
       // you reuse a regex object. Other regex functions are fine though...
