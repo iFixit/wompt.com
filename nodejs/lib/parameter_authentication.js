@@ -1,6 +1,7 @@
 var wompt = require("./includes"),
 Url = require('url'),
 util = require('util');
+env = require('../environment');
 
 var MAX_REQUEST_AGE = 24 * 60 * 60; // 24 hours in seconds
 
@@ -54,6 +55,11 @@ function verifyDomain(req, res, next){
 // that was loaded into req.account
 //
 function verifyAuthenticity(req, res, next){
+   if (env.environment == 'development') {
+      // no auth needed
+      return next()
+   }
+
 	// if there is no account, or the account does't have SSO, break out of
 	// the rest of this stack
 	if(!req.account || !req.account.hasFeature('sso'))
