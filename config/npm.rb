@@ -12,7 +12,7 @@ namespace :deploy do
 		desc "Install missing npm dependencies on the server"
 		task :install, :roles => :app do
 			run "mkdir -p #{shared_path}/node_modules"
-			run "cd #{current_path}/nodejs && npm install "
+			run "cd #{current_path}/nodejs && #{npm_path} install "
 		end
 		
 		desc "Create the necessary symlinks for npm"
