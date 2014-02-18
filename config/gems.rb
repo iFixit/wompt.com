@@ -1,6 +1,7 @@
 namespace :deploy do
 	namespace :gems do
-		after 'deploy:cold', 'deploy:gems:install'
+		# Disable oauth authentication for now
+		# after 'deploy:cold', 'deploy:gems:install'
 
 		desc "Deploy and install missing ruby gem dependencies on the server"
 		task :default, :roles => :app do
