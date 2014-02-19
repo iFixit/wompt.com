@@ -29,4 +29,5 @@ module.exports = {
 		}
 	}
 	, redirectWww	: true
+	, ipWhitelist: ['72.29.166.163']
 }
