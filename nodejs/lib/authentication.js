@@ -147,6 +147,16 @@ function Auth(config){
 			user.save(callback);
 		} else callback();
 	}
+
+	// Give the response a session that is associated with this user
+	// so they are effectively signed in for future requests
+	this.adopt_existing_session = function (res, user) {
+		if (user.sessions.length > 0) {
+			this.set_cookie(res, user.sessions[0].token);
+		} else {
+		   this.start_session(res, user);
+		}
+	}
 		
 		
 	this.clear_token = function(response){

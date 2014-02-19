@@ -89,14 +89,9 @@ function loadUserBasedOnQueryParam(req, res, next){
 			wompt.User.findOne({account_id: req.account.id, account_user_id: req.query.user_id},
 			function(err, user){
 				if(user){
-					req.user = user;
-					next();
+					proceede(err, user);
 				}else{
-					createUserFromQueryParams(req, function(err, user){
-						if(user)
-							req.user = user;
-						return next(err);				
-					});
+					createUserFromQueryParams(req, proceede);
 				}
 			})
 		} else if(req.query.anonymous === '1') { // no user_id parameter, check for anonymous=
@@ -109,6 +104,15 @@ function loadUserBasedOnQueryParam(req, res, next){
 	// see Util.preStackMiddleware
 	else
 		next(null, 'break');
+
+	function proceede(err, user) {
+		if (user) {
+			req.user = user;
+			wompt.Auth.adopt_existing_session(res, user);
+		}
+
+		return next(err);
+	}
 }
 
 function createUserFromQueryParams(req, callback){
