@@ -110,10 +110,16 @@ function Auth(config){
 	
 	// Gives 404 errors for non admins
 	this.blockNonAdmins = function(req, res, next){
-		if(req.user && req.user.is_admin())
+		if(isFromAdmin(req))
 			next();
 		else
 			next(new wompt.errors.NotFound());
+	}
+
+	this.isFromAdmin = isFromAdmin;
+	function isFromAdmin(req) {
+		return (req.user && req.user.is_admin()) ||
+		(config.ipWhitelist && config.ipWhitelist.indexOf(req.connection.remoteAddress) !== -1);
 	}
 	
 	this.start_session = function(res, user){

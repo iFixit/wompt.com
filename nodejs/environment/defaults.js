@@ -82,4 +82,6 @@ module.exports = {
 	
 	, redirectWww: false
 	, redirectWwwToPort: 16867
+
+	, ipWhitelist: null
 }
