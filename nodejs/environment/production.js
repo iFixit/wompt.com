@@ -28,6 +28,14 @@ module.exports = {
 			'log level': 1
 		}
 	}
+	// Allow access to user profile pages
+	, userProfiles: false
+	// Allow access to the home page
+	, homePage: false
+
+	// Allow access to the public non-account namespaces (/chat, /mod, ...)
+	, publicNamespaces: false
+
 	, redirectWww	: true
 	, ipWhitelist: ['72.29.166.163']
 }

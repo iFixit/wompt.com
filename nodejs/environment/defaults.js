@@ -80,6 +80,15 @@ module.exports = {
 		noFacebook:false
 	}
 	
+	// Allow access to user profile pages
+	, userProfiles: true
+
+	// Allow access to the home page
+	, homePage: true
+
+	// Allow access to the public non-account namespaces (/chat, /mod, ...)
+	, publicNamespaces: true
+
 	, redirectWww: false
 	, redirectWwwToPort: 16867
 

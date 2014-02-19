@@ -134,8 +134,9 @@ App.prototype = {
 			,'/contact_us'
 		]);
 		
-		exp.get("/", landingPage);
-
+		if (this.config.homePage) {
+			exp.get("/", landingPage);
+		}
 
 		exp.post("/", function(req, res){
 			wompt.Auth.get_or_set_token(req, res);

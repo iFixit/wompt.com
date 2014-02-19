@@ -32,7 +32,9 @@ function NamespaceController(app){
 		}
 		
 		// Public namespaces are accesible at /namespace
-		express.get("/:namespace/*", createNamespaceFilter('public'));
+		if (wompt.env.publicNamespaces) {
+			express.get("/:namespace/*", createNamespaceFilter('public'));
+		}
 
 		// Namespaces owned by accounts are assessible at /a/namespace
 		express.get("/a/:namespace/*", createNamespaceFilter('account')); 
