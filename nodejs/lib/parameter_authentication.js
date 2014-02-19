@@ -108,6 +108,11 @@ function loadUserBasedOnQueryParam(req, res, next){
 	function proceede(err, user) {
 		if (user) {
 			req.user = user;
+			var email = req.query.email;
+			if (email && user.email != email) {
+				user.email = email;
+				user.save();
+			}
 			wompt.Auth.adopt_existing_session(res, user);
 		}
 
@@ -120,7 +125,8 @@ function createUserFromQueryParams(req, callback){
 	var user = new wompt.User({
 		account_id: req.account.id,
 		account_user_id: q.user_id,
-		name: q.user_name
+		name: q.user_name,
+		email: q.email
 	});
 	
 	user.save(callback);
