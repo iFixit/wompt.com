@@ -6,6 +6,9 @@ deploy_root = path.normalize(root + '/..');
 
 module.exports = {
 	  port: 8001
+	, ssl: false 
+	, key: ''
+	, cert: ''
 	, public_dir: root + '/public'
 	, db_name: 'wompt_dev'
 	, root: root

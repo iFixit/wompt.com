@@ -1,7 +1,8 @@
-var http   = require("http"),
+var http   = require("https"),
     url    = require("url"),
     wompt  = require("./includes"),
     util   = require('util'),
+    fs     = require('fs'),
     logger = wompt.logger,
     SocketIO= wompt.SocketIO,
     assetManager = require('./asset_manager'),
@@ -12,6 +13,10 @@ function App(options){
 	var self = this;
 	
 	this.config = options.config;
+	this.credentials = {
+		key: this.config.ssl ? fs.readFileSync(this.config.key) : ''
+		, cert: this.config.ssl ? fs.readFileSync(this.config.cert) : ''
+	};
 	this.pretty_print_config();
 	this.meta_users = new wompt.MetaUserManager();
 	this.accountManager = new wompt.AccountManager();
@@ -71,7 +76,7 @@ App.prototype = {
 
 	create_express_server:function(){
 		var config = this.config;
-		var exp = express.createServer();
+		var exp = config.ssl ? express.createServer(this.credentials) : express.createServer();
 		var me = this;
 		
 		exp.configure(function(){
