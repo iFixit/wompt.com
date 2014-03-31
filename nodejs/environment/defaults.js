@@ -6,6 +6,9 @@ deploy_root = path.normalize(root + '/..');
 
 module.exports = {
 	  port: 8001
+	, ssl: false 
+	, key: ''
+	, cert: ''
 	, public_dir: root + '/public'
 	, db_name: 'wompt_dev'
 	, root: root
@@ -80,6 +83,17 @@ module.exports = {
 		noFacebook:false
 	}
 	
+	// Allow access to user profile pages
+	, userProfiles: true
+
+	// Allow access to the home page
+	, homePage: true
+
+	// Allow access to the public non-account namespaces (/chat, /mod, ...)
+	, publicNamespaces: true
+
 	, redirectWww: false
 	, redirectWwwToPort: 16867
+
+	, ipWhitelist: null
 }

@@ -41,11 +41,11 @@ UI.once('init', function(){
 		if(Util.Text.linkifyTest(text)){
 			//escape [<, >, ', ", &] so we don't include any nasty html tags
 			text = text
+          .replace(/&/g, '&amp;')
           .replace(/'/g, '&#39;')
           .replace(/"/g, '&quot;')
-          .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
-          .replace(/>/g,'&gt;');
+          .replace(/>/g, '&gt;');
 			el.html(Util.Text.linkify(text));
 		}
 		else

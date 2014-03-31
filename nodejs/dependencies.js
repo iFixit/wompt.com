@@ -8,5 +8,5 @@ module.exports = {
 	lingo: require('lingo'),
 	socketio: require('socket.io'),
 	expressResource: require("./vendor/express-resource"),
-	connectAssetManager: require('./vendor/connect-assetmanager')
+	connectAssetManager: require('connect-assetmanager')
 }

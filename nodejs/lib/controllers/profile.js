@@ -6,6 +6,8 @@ function ProfileController(app){
 	self = this;
 	
 	this.register = function(){
+		if (!wompt.env.userProfiles)
+			return;
 		express.get("/users/:id", renderProfile);
 		express.post("/profile", changeSettings);
 		express.get("/profile", ownProfilePage);		

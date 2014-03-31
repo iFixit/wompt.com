@@ -13,7 +13,8 @@ set :copy_exclude, [".git"]
 set :monit_config_location, "/etc/monit/"
 
 # Node settings
-set :node_path, "/usr/bin/node"
+set :node_path, "/usr/local/bin/node"
+set :npm_path, "/usr/local/bin/npm"
 
 default_run_options[:pty] = true
 

@@ -19,6 +19,7 @@
 		"lingo": "0.0.4",
 		"socket.io" : "~0.8.7",
 		"connect-assetmanager-handlers" : "~0.0.17",
+		"connect-assetmanager" : "~0.0.28",
 		"request" : "~0.10.0",
 		"airbrake" : "~0.2.4"
 	},
