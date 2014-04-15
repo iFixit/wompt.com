@@ -11,7 +11,7 @@ module.exports = {
 
 	, hoptoad: {
 		  apiKey: '2d12a5a4e55714b1d7a3fbae31c5e0ae'
-		, reportErrors: true
+		, reportErrors: false
 	}
 	, logs: {
 		root: path.normalize(shared + '/log')
@@ -28,5 +28,14 @@ module.exports = {
 			'log level': 1
 		}
 	}
+	// Allow access to user profile pages
+	, userProfiles: false
+	// Allow access to the home page
+	, homePage: false
+
+	// Allow access to the public non-account namespaces (/chat, /mod, ...)
+	, publicNamespaces: false
+
 	, redirectWww	: true
+	, ipWhitelist: ['72.29.166.163']
 }

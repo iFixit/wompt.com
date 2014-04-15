@@ -72,8 +72,8 @@ User.method({
 	
 	is_admin: function(){
 		return (this.email in {
-			'dbeardsl@gmail.com': true,
-			'abtinf@gmail.com': true
+			'daniel@ifixit.com': true,
+			'kyle@ifixit.com': true
 		});
 	}
 });

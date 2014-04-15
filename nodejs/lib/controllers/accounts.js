@@ -173,7 +173,8 @@ function AccountsController(app){
 	}
 	
 	function allowOwnersAndAdmins(req, res, next){
-		if(req.user && (req.user.is_admin() || req.account.owner_ids.indexOf(req.user.id) >= 0))
+		if(wompt.Auth.isFromAdmin(req) ||
+		(req.user && req.account.owner_ids.indexOf(req.user.id) >= 0))
 			next();
 		else
 			next(new wompt.errors.NotFound());
