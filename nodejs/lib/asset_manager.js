@@ -45,6 +45,7 @@ var assetManagerGroups = {
 			'/public/external/bootstrap.js'
 			, '/public/external/events.js'
 			, '/public/external/json2.js'
+         , '/public/external/showdown.js'
 			, '/public/js/util.js'			
 			, '/public/js/main.js'
 			, '/public/js/io.js'

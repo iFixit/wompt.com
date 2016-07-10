@@ -10,7 +10,6 @@ body#chat .main{
 	font-size:12px;
 }
 
-
 #chat #top{
 	margin-bottom:0;
 	height:55px;
@@ -35,6 +34,13 @@ body#chat .main{
 	top:73px; /* to match heigh of #top */
 }
 
+code {
+    font-family: monospace;
+}
+
+em {
+    font-style: italic;
+}
 
 #top_drawer{
 	overflow:hidden;
